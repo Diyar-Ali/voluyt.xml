@@ -100,36 +100,35 @@ async function compilePages() {
     console.log('Compiling pages...');
     const pageFiles = await fs.readdir(config.pagesDir);
     const layoutContent = await fs.readFile(path.join(config.layoutsDir, 'main.hbs'), 'utf-8');
-    // No need to compile main layout separately if using it as a string template for each page
+    const layoutTemplate = Handlebars.compile(layoutContent); // Compile main.hbs layout
 
     for (const file of pageFiles) {
         if (file.endsWith('.hbs')) {
             const pageName = path.basename(file, '.hbs');
             const pageFilePath = path.join(config.pagesDir, file);
-            const pageContent = await fs.readFile(pageFilePath, 'utf-8');
+            const pageSpecificContent = await fs.readFile(pageFilePath, 'utf-8'); // Content of index.hbs, etc.
 
-            // Each page can have its own context, inheriting global context
+            // Data object for this specific page
+            // It will be populated by {{set}} helpers when pageSpecificTemplate is executed
             const pageData = {
-                ...config, // Global site config, companyProfile, etc.
-                // page specific data can be added here if needed, though {{set}} helper handles some of this
+                site: config.site, // Global site config
+                companyProfile: config.companyProfile, // Global company profile
+                // pageTitle, metaDescription, etc., will be added by {{set}} helpers
             };
 
-            // Compile the page template itself (which might define layout sections)
-            const compiledPageTemplate = Handlebars.compile(pageContent);
-            // Then compile the main layout, providing the compiled page content (and its layout sections)
-            // This approach allows pages to define what goes into {{body}} and other layout blocks.
-            // The `set` helper populates pageTitle, metaDescription in pageData.root
-            const pageHtmlFragment = compiledPageTemplate(pageData);
+            // Compile the page-specific content (e.g., index.hbs)
+            // This step is primarily to execute {{set}} helpers and gather metadata.
+            // The actual HTML fragment for the body is also produced here.
+            const pageSpecificTemplate = Handlebars.compile(pageSpecificContent);
+            const bodyHtml = pageSpecificTemplate(pageData); // This executes {{set}} and returns HTML for body
 
-            // The main.hbs layout expects {{{body}}}, pageTitle, metaDescription etc.
-            // The `set` helper in page templates will have populated these in pageData.root
-            // For `{{{body}}}`, Handlebars' #partial block mechanism handles this.
-            // If using a simple `{{{body}}}`, ensure `pageHtmlFragment` is correctly structured.
-
-            // The current setup uses `{{#partial "body"}}...{{/partial}}` and `{{> layouts/main}}` in each page.
-            // So, we just compile the page file, and it will pull in the layout.
-            const finalHtml = Handlebars.compile(pageContent)(pageData);
-
+            // The pageData object is modified by reference by the 'set' helpers if they are in pageSpecificContent.
+            // All variables set by {{set}} are now available in pageData.
+            // Now, pass this data, including the bodyHtml, to the main layout template.
+            const finalHtml = layoutTemplate({
+                ...pageData, // Contains site, companyProfile, and anything from {{set}}
+                body: bodyHtml, // The compiled HTML of the page itself
+            });
 
             const outputFilePath = path.join(config.buildDir, `${pageName}.html`);
             await fs.writeFile(outputFilePath, finalHtml);
