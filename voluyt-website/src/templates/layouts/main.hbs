@@ -9,7 +9,7 @@
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="{{pageTitle}} - Voluyt">
     <meta property="og:description" content="{{metaDescription}}">
-    <meta property="og:image" content="{{ogImage | default '/assets/images/logo-primary.svg'}}">
+    <meta property="og:image" content="{{#if ogImage}}{{ogImage}}{{else}}/assets/images/logo-primary.svg{{/if}}">
     <meta property="og:url" content="{{ogUrl}}">
     <meta property="og:type" content="website">
 
