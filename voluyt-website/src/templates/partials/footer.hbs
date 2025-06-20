@@ -1,6 +1,6 @@
 <footer class="bg-voluyt-dark-text text-voluyt-bg-light mt-auto">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
             <div>
                 <img class="h-16 w-auto mb-4" src="/assets/images/logo-monochrome-white.svg" alt="Voluyt Logo Wit">
                 <p class="text-sm text-voluyt-subtle-text">&copy; {{currentYear}} Voluyt B.V. Alle rechten voorbehouden.</p>
@@ -14,6 +14,14 @@
                     <li><a href="/over-ons.html" class="hover:text-voluyt-teal transition-colors duration-300">Over Ons</a></li>
                     <li><a href="/contact.html" class="hover:text-voluyt-teal transition-colors duration-300">Contact</a></li>
                     <!-- Add links to privacy policy, terms, etc. if needed -->
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-lg font-heading font-semibold text-white mb-4">Thema's</h5>
+                <ul class="space-y-2">
+                    {{#each companyProfile.themes}}
+                    <li><a href="/theme-{{this.slug}}.html" class="hover:text-voluyt-teal transition-colors duration-300">{{this.title}}</a></li>
+                    {{/each}}
                 </ul>
             </div>
             <div>

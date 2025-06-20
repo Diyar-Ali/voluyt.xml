@@ -1,49 +1,46 @@
-{{set "pageTitle" "Contact Opnemen"}}
-{{set "metaDescription" "Neem contact op met Voluyt voor consultancy, interim management of andere vragen. Gevestigd in Amsterdam."}}
-{{set "ogUrl" (concat site.baseUrl "/contact.html")}}
+{{set "pageTitle" "Contact Voluyt - Plan een Afspraak | Consultancy Amsterdam"}}
+{{set "metaDescription" (concat "Neem contact op met Voluyt voor advies of plan direct een afspraak via Microsoft Bookings. Experts in consultancy en interim management in Amsterdam. Tel: " companyProfile.companyInfo.contact.phone)}}
+{{set "keywords" "Contact Voluyt, afspraak plannen Voluyt, Voluyt Amsterdam, consultancy contact, interim management contact, procesverbetering advies, business intelligence expert, Microsoft Bookings Voluyt"}}
 
 <section class="py-12 md:py-16 bg-voluyt-orange text-white">
     <div class="container mx-auto px-4 text-center">
-        <h1 class="text-4xl font-heading font-bold animate-fadeInDown">Neem Contact Op</h1>
-        <p class="text-lg mt-4 max-w-2xl mx-auto animate-fadeInUp">Wij horen graag van u. Laten we bespreken hoe we uw organisatie kunnen helpen.</p>
+        <h1 class="text-4xl font-heading font-bold animate-fadeInDown">Plan een Gesprek</h1>
+        <p class="text-lg mt-4 max-w-2xl mx-auto animate-fadeInUp">De snelste manier om uw uitdagingen te bespreken en te ontdekken hoe Voluyt kan helpen, is door direct een afspraak te plannen.</p>
     </div>
 </section>
 
 <section class="py-16 md:py-24">
     <div class="container mx-auto px-4">
-        <div class="max-w-3xl mx-auto card">
-            <h2 class="text-2xl font-heading font-bold text-voluyt-dark-text mb-8 text-center">Stuur ons een bericht</h2>
-            <form action="#" method="POST" class="space-y-6">
-                <div>
-                    <label for="name" class="block text-sm font-medium text-voluyt-dark-text">Volledige naam</label>
-                    <input type="text" name="name" id="name" autocomplete="name" required class="mt-1 block w-full rounded-md border-voluyt-border shadow-sm focus:border-voluyt-teal focus:ring-voluyt-teal sm:text-sm p-2">
-                </div>
-                <div>
-                    <label for="email" class="block text-sm font-medium text-voluyt-dark-text">E-mailadres</label>
-                    <input type="email" name="email" id="email" autocomplete="email" required class="mt-1 block w-full rounded-md border-voluyt-border shadow-sm focus:border-voluyt-teal focus:ring-voluyt-teal sm:text-sm p-2">
-                </div>
-                <div>
-                    <label for="phone" class="block text-sm font-medium text-voluyt-dark-text">Telefoonnummer (optioneel)</label>
-                    <input type="tel" name="phone" id="phone" autocomplete="tel" class="mt-1 block w-full rounded-md border-voluyt-border shadow-sm focus:border-voluyt-teal focus:ring-voluyt-teal sm:text-sm p-2">
-                </div>
-                <div>
-                    <label for="message" class="block text-sm font-medium text-voluyt-dark-text">Bericht</label>
-                    <textarea id="message" name="message" rows="4" required class="mt-1 block w-full rounded-md border-voluyt-border shadow-sm focus:border-voluyt-teal focus:ring-voluyt-teal sm:text-sm p-2"></textarea>
-                </div>
-                <div class="text-center">
-                    <button type="submit" class="btn-primary text-lg">Verstuur Bericht</button>
-                </div>
-            </form>
-            <div class="mt-12 text-center">
-                <h3 class="text-xl font-heading text-voluyt-dark-text mb-3">Of neem direct contact op:</h3>
-                <p class="text-voluyt-subtle-text"><strong>E-mail:</strong> <a href="mailto:{{companyProfile.companyInfo.contact.email}}">{{companyProfile.companyInfo.contact.email}}</a></p>
-                <p class="text-voluyt-subtle-text"><strong>Telefoon:</strong> <a href="tel:{{companyProfile.companyInfo.contact.phone}}">{{companyProfile.companyInfo.contact.phone}}</a></p>
-                <p class="text-voluyt-subtle-text mt-4">
-                    <strong>Adres:</strong><br>
-                    {{companyProfile.companyInfo.location.address}}<br>
-                    {{companyProfile.companyInfo.location.postalCode}} {{companyProfile.companyInfo.location.city}}
+        <div class="max-w-2xl mx-auto text-center">
+            <div class="card p-8 md:p-12 animate-fadeInUp">
+                <h2 class="text-3xl font-heading font-bold text-voluyt-dark-text mb-6">Direct een Afspraak Inplannen</h2>
+                <p class="text-voluyt-subtle-text mb-8 text-lg">
+                    Gebruik onze Microsoft Bookings pagina om direct een tijdstip te kiezen dat u het beste uitkomt.
                 </p>
-                 <p class="mt-4"><a href="{{companyProfile.companyInfo.contact.bookingsUrl}}" target="_blank" class="btn-secondary">Plan direct een afspraak</a></p>
+                <a href="{{companyProfile.companyInfo.contact.bookingsUrl}}" target="_blank" rel="noopener noreferrer" class="btn-primary text-xl py-4 px-8 inline-block">
+                    Plan Nu Uw Afspraak
+                </a>
+                <p class="mt-6 text-sm text-voluyt-subtle-text">(U wordt doorgestuurd naar Microsoft Bookings)</p>
+            </div>
+
+            <div class="mt-16 pt-12 border-t border-voluyt-border">
+                <h3 class="text-2xl font-heading font-semibold text-voluyt-dark-text mb-6">Andere Contactmogelijkheden</h3>
+                <div class="space-y-4 text-lg">
+                    <p class="text-voluyt-subtle-text">
+                        <strong>E-mail:</strong> <a href="mailto:{{companyProfile.companyInfo.contact.email}}" class="text-voluyt-dark-teal hover:underline">{{companyProfile.companyInfo.contact.email}}</a>
+                    </p>
+                    <p class="text-voluyt-subtle-text">
+                        <strong>Telefoon:</strong> <a href="tel:{{companyProfile.companyInfo.contact.phone}}" class="text-voluyt-dark-teal hover:underline">{{companyProfile.companyInfo.contact.phone}}</a>
+                    </p>
+                    <p class="text-voluyt-subtle-text mt-4">
+                        <strong>Bezoekadres (op afspraak):</strong><br>
+                        {{companyProfile.companyInfo.location.address}}<br>
+                        {{companyProfile.companyInfo.location.postalCode}} {{companyProfile.companyInfo.location.city}}
+                    </p>
+                     <p class="text-voluyt-subtle-text mt-4">
+                        <a href="{{companyProfile.companyInfo.contact.linkedin}}" target="_blank" rel="noopener noreferrer" class="text-voluyt-dark-teal hover:underline">Volg ons op LinkedIn</a>
+                    </p>
+                </div>
             </div>
         </div>
     </div>

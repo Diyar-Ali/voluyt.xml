@@ -6,9 +6,23 @@
                     <img class="h-12 md:h-16 w-auto" src="/assets/images/logo-primary.svg" alt="Voluyt Logo">
                 </a>
             </div>
-            <nav class="hidden md:flex space-x-8">
+            <nav class="hidden md:flex space-x-8 items-center">
                 <a href="/" class="font-medium text-voluyt-dark-text hover:text-voluyt-teal transition-colors duration-300">Home</a>
                 <a href="/diensten.html" class="font-medium text-voluyt-dark-text hover:text-voluyt-teal transition-colors duration-300">Diensten</a>
+                {{!-- Thema's Dropdown --}}
+                <div class="relative group">
+                    <button class="font-medium text-voluyt-dark-text hover:text-voluyt-teal transition-colors duration-300 group-hover:text-voluyt-teal flex items-center">
+                        Thema's
+                        <svg class="w-4 h-4 ml-1 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+                    </button>
+                    <div class="absolute left-0 mt-0 w-56 bg-white rounded-md shadow-lg py-1 z-20 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300 ease-out invisible group-hover:visible group-focus-within:visible">
+                        {{#each companyProfile.themes}}
+                        <a href="/theme-{{this.slug}}.html" class="block px-4 py-2 text-sm text-voluyt-dark-text hover:bg-voluyt-teal hover:text-white transition-colors duration-150">
+                            {{this.title}}
+                        </a>
+                        {{/each}}
+                    </div>
+                </div>
                 <a href="/over-ons.html" class="font-medium text-voluyt-dark-text hover:text-voluyt-teal transition-colors duration-300">Over Ons</a>
                 <a href="/contact.html" class="font-medium text-voluyt-dark-text hover:text-voluyt-teal transition-colors duration-300">Contact</a>
             </nav>
@@ -26,6 +40,10 @@
         <nav class="px-2 pt-2 pb-4 space-y-1 sm:px-3">
             <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-voluyt-dark-text hover:bg-voluyt-teal hover:text-white transition-colors duration-300">Home</a>
             <a href="/diensten.html" class="block px-3 py-2 rounded-md text-base font-medium text-voluyt-dark-text hover:bg-voluyt-teal hover:text-white transition-colors duration-300">Diensten</a>
+            <span class="block px-3 pt-3 pb-1 text-xs text-voluyt-subtle-text uppercase">Thema's</span>
+            {{#each companyProfile.themes}}
+            <a href="/theme-{{this.slug}}.html" class="block px-3 py-2 rounded-md text-base font-medium text-voluyt-dark-text hover:bg-voluyt-teal hover:text-white transition-colors duration-300 ml-2">{{this.title}}</a>
+            {{/each}}
             <a href="/over-ons.html" class="block px-3 py-2 rounded-md text-base font-medium text-voluyt-dark-text hover:bg-voluyt-teal hover:text-white transition-colors duration-300">Over Ons</a>
             <a href="/contact.html" class="block px-3 py-2 rounded-md text-base font-medium text-voluyt-dark-text hover:bg-voluyt-teal hover:text-white transition-colors duration-300">Contact</a>
         </nav>

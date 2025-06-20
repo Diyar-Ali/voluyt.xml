@@ -1,14 +1,15 @@
-{{set "pageTitle" "Home"}}
-{{set "metaDescription" "Voluyt is een consultancybureau in Amsterdam gespecialiseerd in interim management, procesverbetering en business intelligence. Wij helpen organisaties vooruitgang te realiseren."}}
-{{set "ogUrl" (concat site.baseUrl "/index.html")}}
+{{set "pageTitle" "Voluyt Home - Consultancy & Interim Management Amsterdam"}}
+{{set "metaDescription" "Voluyt realiseert vooruitgang. Expert in consultancy, interim management, continuous improvement en business intelligence in Amsterdam. Ontdek onze aanpak."}}
+{{set "keywords" "Voluyt, consultancy, interim management, continuous improvement, procesverbetering, performance management, business intelligence, Amsterdam, strategie, operationele excellentie, zelfverbeteren, leiderschap, organisatieadvies, verander management, data-analyse, bedrijfsadvies"}}
+{{!-- ogUrl is now set by build.js by default. Only use {{set "ogUrl" ...}} if you need to override it. --}}
 
 <section class="bg-voluyt-bg-subtle py-16 md:py-24 text-center">
     <div class="container mx-auto px-4">
-        <h1 class="text-4xl md:text-5xl font-heading font-bold text-voluyt-dark-text mb-6 animate-fadeInUp">Samen vooruitgang realiseren.</h1>
+        <h1 class="text-4xl md:text-5xl font-heading font-bold text-voluyt-dark-text mb-6 animate-fadeInUp">{{companyProfile.companyInfo.tagline}}</h1>
         <p class="text-lg md:text-xl text-voluyt-subtle-text mb-8 max-w-2xl mx-auto animate-fadeInUp" style="animation-delay: 0.2s;">
-            Voluyt helpt organisaties hun volledige potentieel te ontsluiten door complexe uitdagingen om te zetten in concrete, duurzame resultaten.
+            {{companyProfile.strategyAndBranding.mission}}
         </p>
-        <a href="/diensten.html" class="btn-primary text-lg animate-fadeInUp" style="animation-delay: 0.4s;">Ontdek onze diensten</a>
+        <a href="diensten.html" class="btn-primary text-lg animate-fadeInUp" style="animation-delay: 0.4s;">Ontdek onze diensten</a>
     </div>
 </section>
 
@@ -16,11 +17,31 @@
     <div class="container mx-auto px-4">
         <h2 class="text-3xl font-heading font-bold text-center text-voluyt-dark-text mb-12 animate-fadeIn">Kernactiviteiten</h2>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {{> service-card title="Consultancy" excerpt="Strategisch advies en operationele expertise om uw doelen te bereiken." url="/consultancy.html"}}
-            {{> service-card title="Interim Management" excerpt="Tijdelijke invulling van cruciale managementposities met focus op resultaat." url="/interim-management.html"}}
-            {{> service-card title="Continuous Improvement" excerpt="Processen optimaliseren en een cultuur van zelfverbeteren creëren." url="/continuous-improvement.html"}}
-            {{> service-card title="Business Intelligence" excerpt="Data omzetten in waardevolle inzichten voor betere besluitvorming." url="/business-intelligence.html"}}
-            {{> service-card title="Learning & Development" excerpt="Ontwikkelen van vaardigheden en kennis binnen uw organisatie." url="/learning-development.html"}}
+            {{#each companyProfile.services}}
+            {{> service-card title=this.title excerpt=this.shortDescription url=(concat this.slug ".html")}}
+            {{/each}}
         </div>
+    </div>
+</section>
+
+<section class="py-16 md:py-24 bg-voluyt-bg-light">
+    <div class="container mx-auto px-4">
+        <div class="text-center max-w-3xl mx-auto">
+            <h2 class="text-3xl font-heading font-bold text-voluyt-dark-text mb-6 animate-fadeIn">Onze Aanpak</h2>
+            <p class="text-lg text-voluyt-subtle-text mb-4 font-semibold animate-fadeIn" style="animation-delay: 0.1s;">
+                {{companyProfile.strategyAndBranding.marketPositioning}}
+            </p>
+            <p class="text-voluyt-subtle-text text-left md:text-center animate-fadeIn" style="animation-delay: 0.2s;">
+                {{companyProfile.strategyAndBranding.usp}}
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="py-16 md:py-24 text-center bg-voluyt-teal text-white">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-heading font-bold mb-6 animate-fadeIn">Klaar om vooruitgang te boeken?</h2>
+        <p class="text-lg mb-8 max-w-xl mx-auto animate-fadeIn" style="animation-delay: 0.2s;">Neem contact op voor een vrijblijvend gesprek en ontdek hoe Voluyt uw organisatie kan helpen.</p>
+        <a href="contact.html" class="btn-secondary bg-white text-voluyt-dark-teal hover:bg-voluyt-gold hover:text-white text-lg animate-fadeIn" style="animation-delay: 0.4s;">Neem Contact Op</a>
     </div>
 </section>

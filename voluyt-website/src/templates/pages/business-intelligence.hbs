@@ -1,16 +1,25 @@
-{{set "pageTitle" "Business Intelligence"}}
-{{set "metaDescription" "Details over Voluyt's business intelligence diensten."}}
-{{set "ogUrl" (concat site.baseUrl "/business-intelligence.html")}}
+{{set "pageTitle" (concat service.title " - Voluyt Diensten")}}
+{{set "metaDescription" (concat "Leer meer over Voluyt's " service.title " diensten. " service.shortDescription)}}
+{{set "keywords" service.keywords}}
 
-<section class="py-12 md:py-16 bg-voluyt-teal text-white">
+<section class="py-12 md:py-16 bg-voluyt-dark-teal text-white">
     <div class="container mx-auto px-4 text-center">
-        <h1 class="text-4xl font-heading font-bold">Business Intelligence</h1>
-        <p class="text-lg mt-4 max-w-2xl mx-auto">Data omzetten in waardevolle inzichten.</p>
+        <h1 class="text-4xl font-heading font-bold animate-fadeInDown">{{service.title}}</h1>
+        <p class="text-lg mt-4 max-w-2xl mx-auto animate-fadeInUp">{{service.shortDescription}}</p>
     </div>
 </section>
 
 <section class="py-16 md:py-24">
     <div class="container mx-auto px-4">
-        <p class="text-center text-xl text-voluyt-subtle-text">Detailed content about Business Intelligence services will go here.</p>
+        <div class="max-w-3xl mx-auto">
+            <div class="prose lg:prose-xl max-w-none text-voluyt-subtle-text animate-fadeInUp">
+                {{{service.fullDescription}}}
+            </div>
+            <div class="mt-12 pt-8 border-t border-voluyt-border text-center">
+                <h2 class="text-2xl font-heading font-semibold text-voluyt-dark-text mb-4">Interesse in {{service.title}}?</h2>
+                <p class="text-voluyt-subtle-text mb-6">Laten we bespreken hoe Voluyt u kan helpen met {{service.title}}.</p>
+                <a href="/contact.html" class="btn-primary text-lg">Neem Contact Op</a>
+            </div>
+        </div>
     </div>
 </section>
