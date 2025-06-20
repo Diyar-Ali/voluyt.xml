@@ -1,0 +1,32 @@
+<footer class="bg-voluyt-dark-text text-voluyt-bg-light mt-auto">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <img class="h-16 w-auto mb-4" src="/assets/images/logo-monochrome-white.svg" alt="Voluyt Logo Wit">
+                <p class="text-sm text-voluyt-subtle-text">&copy; {{currentYear}} Voluyt B.V. Alle rechten voorbehouden.</p>
+                <p class="text-sm text-voluyt-subtle-text mt-1">KvK: {{companyProfile.companyInfo.legalDetails.kvkNumber}} | BTW: {{companyProfile.companyInfo.legalDetails.btwNumber}}</p>
+            </div>
+            <div>
+                <h5 class="text-lg font-heading font-semibold text-white mb-4">Navigatie</h5>
+                <ul class="space-y-2">
+                    <li><a href="/" class="hover:text-voluyt-teal transition-colors duration-300">Home</a></li>
+                    <li><a href="/diensten.html" class="hover:text-voluyt-teal transition-colors duration-300">Diensten</a></li>
+                    <li><a href="/over-ons.html" class="hover:text-voluyt-teal transition-colors duration-300">Over Ons</a></li>
+                    <li><a href="/contact.html" class="hover:text-voluyt-teal transition-colors duration-300">Contact</a></li>
+                    <!-- Add links to privacy policy, terms, etc. if needed -->
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-lg font-heading font-semibold text-white mb-4">Contact</h5>
+                <address class="not-italic text-sm space-y-2">
+                    <p>{{companyProfile.companyInfo.location.address}},<br>{{companyProfile.companyInfo.location.postalCode}} {{companyProfile.companyInfo.location.city}}</p>
+                    <p>Email: <a href="mailto:{{companyProfile.companyInfo.contact.email}}" class="hover:text-voluyt-teal transition-colors duration-300">{{companyProfile.companyInfo.contact.email}}</a></p>
+                    <p>Telefoon: <a href="tel:{{companyProfile.companyInfo.contact.phone}}" class="hover:text-voluyt-teal transition-colors duration-300">{{companyProfile.companyInfo.contact.phone}}</a></p>
+                    <p>
+                        <a href="{{companyProfile.companyInfo.contact.linkedin}}" target="_blank" rel="noopener noreferrer" class="hover:text-voluyt-teal transition-colors duration-300">LinkedIn</a>
+                    </p>
+                </address>
+            </div>
+        </div>
+    </div>
+</footer>

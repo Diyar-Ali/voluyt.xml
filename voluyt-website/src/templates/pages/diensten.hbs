@@ -1,0 +1,27 @@
+{{#partial "body" }}
+{{set "pageTitle" "Diensten"}}
+{{set "metaDescription" "Ontdek de consultancy diensten van Voluyt: interim management, procesverbetering (Lean), performance management, business intelligence en meer."}}
+{{set "ogUrl" (concat site.baseUrl "/diensten.html")}}
+
+<section class="py-12 md:py-16 bg-voluyt-teal text-white">
+    <div class="container mx-auto px-4 text-center">
+        <h1 class="text-4xl font-heading font-bold animate-fadeInDown">Onze Diensten</h1>
+        <p class="text-lg mt-4 max-w-2xl mx-auto animate-fadeInUp">Wij bieden een geïntegreerd pakket aan diensten om uw organisatie te helpen groeien en excelleren.</p>
+    </div>
+</section>
+
+<section class="py-16 md:py-24">
+    <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {{!-- Placeholder for detailed service cards/sections --}}
+            {{> service-card title="Consultancy" excerpt="Strategisch advies en begeleiding bij complexe vraagstukken en transities." url="/consultancy.html"}}
+            {{> service-card title="Interim Management" excerpt="Ervaren leiderschap voor tijdelijke opdrachten en projecten." url="/interim-management.html"}}
+            {{> service-card title="Continuous Improvement" excerpt="Implementatie van Lean, Six Sigma en andere methodieken voor procesoptimalisatie." url="/continuous-improvement.html"}}
+            {{> service-card title="Performance Management" excerpt="Ontwikkelen en implementeren van systemen om prestaties te meten en te verbeteren." url="/performance-management.html"}}
+            {{> service-card title="Business Intelligence" excerpt="Data-analyse, rapportages en dashboards voor datagedreven sturing." url="/business-intelligence.html"}}
+            {{> service-card title="Learning & Development" excerpt="Trainingen en workshops op maat om de competenties van uw team te versterken." url="/learning-development.html"}}
+        </div>
+    </div>
+</section>
+{{/partial}}
+{{> layouts/main}}

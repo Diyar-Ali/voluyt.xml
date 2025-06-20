@@ -1,0 +1,53 @@
+{{#partial "body" }}
+{{set "pageTitle" "Contact Opnemen"}}
+{{set "metaDescription" "Neem contact op met Voluyt voor consultancy, interim management of andere vragen. Gevestigd in Amsterdam."}}
+{{set "ogUrl" (concat site.baseUrl "/contact.html")}}
+
+<section class="py-12 md:py-16 bg-voluyt-orange text-white">
+    <div class="container mx-auto px-4 text-center">
+        <h1 class="text-4xl font-heading font-bold animate-fadeInDown">Neem Contact Op</h1>
+        <p class="text-lg mt-4 max-w-2xl mx-auto animate-fadeInUp">Wij horen graag van u. Laten we bespreken hoe we uw organisatie kunnen helpen.</p>
+    </div>
+</section>
+
+<section class="py-16 md:py-24">
+    <div class="container mx-auto px-4">
+        <div class="max-w-3xl mx-auto card">
+            <h2 class="text-2xl font-heading font-bold text-voluyt-dark-text mb-8 text-center">Stuur ons een bericht</h2>
+            <form action="#" method="POST" class="space-y-6">
+                <div>
+                    <label for="name" class="block text-sm font-medium text-voluyt-dark-text">Volledige naam</label>
+                    <input type="text" name="name" id="name" autocomplete="name" required class="mt-1 block w-full rounded-md border-voluyt-border shadow-sm focus:border-voluyt-teal focus:ring-voluyt-teal sm:text-sm p-2">
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-medium text-voluyt-dark-text">E-mailadres</label>
+                    <input type="email" name="email" id="email" autocomplete="email" required class="mt-1 block w-full rounded-md border-voluyt-border shadow-sm focus:border-voluyt-teal focus:ring-voluyt-teal sm:text-sm p-2">
+                </div>
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-voluyt-dark-text">Telefoonnummer (optioneel)</label>
+                    <input type="tel" name="phone" id="phone" autocomplete="tel" class="mt-1 block w-full rounded-md border-voluyt-border shadow-sm focus:border-voluyt-teal focus:ring-voluyt-teal sm:text-sm p-2">
+                </div>
+                <div>
+                    <label for="message" class="block text-sm font-medium text-voluyt-dark-text">Bericht</label>
+                    <textarea id="message" name="message" rows="4" required class="mt-1 block w-full rounded-md border-voluyt-border shadow-sm focus:border-voluyt-teal focus:ring-voluyt-teal sm:text-sm p-2"></textarea>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn-primary text-lg">Verstuur Bericht</button>
+                </div>
+            </form>
+            <div class="mt-12 text-center">
+                <h3 class="text-xl font-heading text-voluyt-dark-text mb-3">Of neem direct contact op:</h3>
+                <p class="text-voluyt-subtle-text"><strong>E-mail:</strong> <a href="mailto:{{companyProfile.companyInfo.contact.email}}">{{companyProfile.companyInfo.contact.email}}</a></p>
+                <p class="text-voluyt-subtle-text"><strong>Telefoon:</strong> <a href="tel:{{companyProfile.companyInfo.contact.phone}}">{{companyProfile.companyInfo.contact.phone}}</a></p>
+                <p class="text-voluyt-subtle-text mt-4">
+                    <strong>Adres:</strong><br>
+                    {{companyProfile.companyInfo.location.address}}<br>
+                    {{companyProfile.companyInfo.location.postalCode}} {{companyProfile.companyInfo.location.city}}
+                </p>
+                 <p class="mt-4"><a href="{{companyProfile.companyInfo.contact.bookingsUrl}}" target="_blank" class="btn-secondary">Plan direct een afspraak</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+{{/partial}}
+{{> layouts/main}}

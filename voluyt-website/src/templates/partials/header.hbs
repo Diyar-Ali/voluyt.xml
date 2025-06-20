@@ -1,0 +1,33 @@
+<header class="bg-voluyt-bg-light shadow-md sticky top-0 z-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-20 md:h-24">
+            <div class="flex-shrink-0">
+                <a href="/" title="Voluyt Home">
+                    <img class="h-12 md:h-16 w-auto" src="/assets/images/logo-primary.svg" alt="Voluyt Logo">
+                </a>
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="/" class="font-medium text-voluyt-dark-text hover:text-voluyt-teal transition-colors duration-300">Home</a>
+                <a href="/diensten.html" class="font-medium text-voluyt-dark-text hover:text-voluyt-teal transition-colors duration-300">Diensten</a>
+                <a href="/over-ons.html" class="font-medium text-voluyt-dark-text hover:text-voluyt-teal transition-colors duration-300">Over Ons</a>
+                <a href="/contact.html" class="font-medium text-voluyt-dark-text hover:text-voluyt-teal transition-colors duration-300">Contact</a>
+            </nav>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-voluyt-dark-text hover:text-voluyt-teal focus:outline-none">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Mobile Menu (hidden by default, shown via JS) -->
+    <div id="mobile-menu" class="md:hidden hidden bg-voluyt-bg-subtle shadow-lg">
+        <nav class="px-2 pt-2 pb-4 space-y-1 sm:px-3">
+            <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-voluyt-dark-text hover:bg-voluyt-teal hover:text-white transition-colors duration-300">Home</a>
+            <a href="/diensten.html" class="block px-3 py-2 rounded-md text-base font-medium text-voluyt-dark-text hover:bg-voluyt-teal hover:text-white transition-colors duration-300">Diensten</a>
+            <a href="/over-ons.html" class="block px-3 py-2 rounded-md text-base font-medium text-voluyt-dark-text hover:bg-voluyt-teal hover:text-white transition-colors duration-300">Over Ons</a>
+            <a href="/contact.html" class="block px-3 py-2 rounded-md text-base font-medium text-voluyt-dark-text hover:bg-voluyt-teal hover:text-white transition-colors duration-300">Contact</a>
+        </nav>
+    </div>
+</header>
