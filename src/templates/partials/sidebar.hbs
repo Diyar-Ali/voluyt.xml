@@ -1,0 +1,118 @@
+<div class="flex flex-col h-full p-3">
+    <nav class="space-y-1 flex-1">
+        <a href="#" data-section="notes" class="nav-item group flex items-center px-3 py-2 text-sm font-medium rounded-r-full text-gray-900 dark:text-white bg-yellow-200 dark:bg-yellow-600 hover:bg-yellow-300 dark:hover:bg-yellow-700">
+            <svg class="mr-3 h-6 w-6 text-gray-700 dark:text-gray-200 group-hover:text-gray-900 dark:group-hover:text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+            </svg>
+            Notes
+        </a>
+        <a href="#" data-section="reminders" class="nav-item group flex items-center px-3 py-2 text-sm font-medium rounded-r-full text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
+            <svg class="mr-3 h-6 w-6 text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Reminders
+        </a>
+
+        <div class="pt-2 pb-1">
+            <span class="px-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Labels</span>
+        </div>
+        <div id="labels-list" class="space-y-1">
+            <!-- Labels will be dynamically inserted here by app.js -->
+            <!-- Example of a label item (to be used as a template by JS) -->
+            <!--
+            <a href="#" data-label-id="1" class="label-item group flex items-center px-3 py-2 text-sm font-medium rounded-r-full text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
+                <svg class="mr-3 h-6 w-6 text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5a2 2 0 012 2v5a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2zm0 0v10a2 2 0 002 2h5m-7 0a2 2 0 002 2h5a2 2 0 002-2M7 7H5m2 0v3m0 0h3m-3 0H5m2 0v3m0 0h3m-3 0H5m5 0v3m0 0h3m-3 0H5"/>
+                </svg>
+                Label Name
+            </a>
+             -->
+        </div>
+        <a href="#" id="edit-labels-button" class="group flex items-center px-3 py-2 text-sm font-medium rounded-r-full text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
+            <svg class="mr-3 h-6 w-6 text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            </svg>
+            Edit labels
+        </a>
+
+        <a href="#" data-section="archive" class="nav-item group flex items-center px-3 py-2 text-sm font-medium rounded-r-full text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
+            <svg class="mr-3 h-6 w-6 text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+            </svg>
+            Archive
+        </a>
+        <a href="#" data-section="trash" class="nav-item group flex items-center px-3 py-2 text-sm font-medium rounded-r-full text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
+            <svg class="mr-3 h-6 w-6 text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+            Trash
+        </a>
+    </nav>
+    <div class="mt-auto p-2 text-center text-xs text-gray-500 dark:text-gray-400">
+        <span>&copy; Google Keep Clone</span>
+    </div>
+</div>
+
+<!-- Label Edit Modal (hidden by default, controlled by Alpine.js in app.js) -->
+<div id="label-edit-modal" x-data="labelModal()" x-show="isOpen" @close-label-modal.window="closeModal()" x-cloak
+     class="fixed inset-0 z-40 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+        <div x-show="isOpen" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200"
+             x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+             class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity dark:bg-gray-900 dark:bg-opacity-75" aria-hidden="true"></div>
+
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+        <div x-show="isOpen" x-transition:enter="ease-out duration-300"
+             x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+             x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+             x-transition:leave="ease-in duration-200"
+             x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+             x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+             class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <div class="bg-white dark:bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white" id="modal-title">
+                            Edit labels
+                        </h3>
+                        <div class="mt-4">
+                            <div class="flex items-center border-b border-gray-300 dark:border-gray-600 py-2">
+                                <button @click="clearNewLabel()" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 p-1">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"></path></svg>
+                                </button>
+                                <input type="text" x-model="newLabelName" placeholder="Create new label" @keydown.enter.prevent="addNewLabel()"
+                                       class="flex-grow appearance-none bg-transparent border-none w-full text-gray-700 dark:text-gray-200 mr-3 py-1 px-2 leading-tight focus:outline-none">
+                                <button @click="addNewLabel()" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 p-1">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
+                                </button>
+                            </div>
+                            <div id="modal-labels-list" class="mt-3 max-h-60 overflow-y-auto">
+                                <!-- Labels loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button @click="closeModal()" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm">
+                    Done
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<template id="label-item-template">
+    <div class="label-item-row group flex items-center py-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
+        <button class="delete-label-icon text-gray-400 dark:text-gray-500 hover:text-red-600 dark:hover:text-red-400 p-1 opacity-0 group-hover:opacity-100 focus:opacity-100">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0 1 16.138 21H7.862a2 2 0 0 1-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v3M4 7h16"></path></svg>
+        </button>
+        <input type="text" value="{{name}}" data-label-id="{{id}}"
+               class="label-name-input flex-grow appearance-none bg-transparent border-none w-full text-gray-700 dark:text-gray-200 mr-3 py-1 px-2 leading-tight focus:outline-none focus:ring-1 focus:ring-indigo-500 rounded">
+        <button class="confirm-edit-label-icon text-gray-400 dark:text-gray-500 hover:text-green-600 dark:hover:text-green-400 p-1 opacity-0 group-hover:opacity-100 focus:opacity-100">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
+        </button>
+    </div>
+</template>

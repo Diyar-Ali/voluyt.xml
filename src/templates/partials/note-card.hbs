@@ -1,0 +1,105 @@
+{{!-- Note Card Partial --}}
+{{!--
+    Expected data context:
+    id: number
+    title: string (optional)
+    content: string
+    color: string (hex, e.g., '#FFFFFF')
+    is_pinned: boolean
+    is_archived: boolean (used to conditionally hide/show or apply different styles)
+    is_trashed: boolean (used to conditionally hide/show or apply different styles)
+    labels: array of objects [{ id: number, name: string }] (optional)
+    image_url: string (optional, for notes with images)
+    created_at: string
+    updated_at: string
+    checklist_items: array of objects [{ text: string, checked: boolean }] (optional, if note is a checklist)
+--}}
+<div class="note-card break-inside-avoid-column bg-white dark:bg-gray-700 rounded-lg border border-gray-300 dark:border-gray-600 shadow-sm hover:shadow-lg transition-shadow duration-200 flex flex-col"
+     data-note-id="{{id}}"
+     style="background-color: {{color}};"
+     x-data="{ showActions: false }" @mouseenter="showActions = true" @mouseleave="showActions = false">
+
+    {{#if image_url}}
+    <img src="{{image_url}}" alt="{{#if title}}{{title}}{{else}}Note image{{/if}}" class="rounded-t-lg object-cover max-h-60">
+    {{/if}}
+
+    <div class="p-4 flex-grow">
+        {{#if title}}
+        <h3 class="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-100 keep-note-title">{{title}}</h3>
+        {{/if}}
+
+        {{#if checklist_items}}
+            <ul class="space-y-1 keep-note-content-checklist">
+                {{#each checklist_items}}
+                <li class="flex items-center">
+                    <input type="checkbox" id="item-{{../id}}-{{@index}}"
+                           class="form-checkbox h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 mr-2"
+                           {{#if checked}}checked{{/if}} data-item-index="{{@index}}">
+                    <label for="item-{{../id}}-{{@index}}" class="text-sm text-gray-700 dark:text-gray-200 {{#if checked}}line-through text-gray-500 dark:text-gray-400{{/if}}">{{text}}</label>
+                </li>
+                {{/each}}
+            </ul>
+        {{else}}
+            <div class="text-sm text-gray-700 dark:text-gray-200 whitespace-pre-wrap keep-note-content">{{{content}}}</div>
+        {{/if}}
+    </div>
+
+    {{#if labels.length}}
+    <div class="px-4 pb-2 pt-1 flex flex-wrap gap-1">
+        {{#each labels}}
+        <span class="label-chip text-xs bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-200 px-2 py-1 rounded-full">{{name}}</span>
+        {{/each}}
+    </div>
+    {{/if}}
+
+    <div class="note-actions p-2 border-t border-gray-200 dark:border-gray-600 transition-opacity duration-150"
+         :class="{ 'opacity-100': showActions, 'opacity-0 lg:opacity-0': !showActions && !isPinned }">
+        <div class="flex items-center justify-start space-x-1">
+            <button title="Remind me" class="action-button p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300">
+                <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </button>
+            <button title="Collaborator" class="action-button p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300">
+                <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+            </button>
+            <button title="Change color" class="action-button change-color-button p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300">
+                <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>
+            </button>
+            <button title="Add image" class="action-button p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300">
+                <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            </button>
+            {{#unless is_archived}}
+            <button title="Archive" class="action-button archive-note-button p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300">
+                <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h14"></path></svg>
+            </button>
+            {{else}}
+            <button title="Unarchive" class="action-button unarchive-note-button p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300">
+                 <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4m-4-5l4-4m0 0l4 4m-4-4v12" />
+                </svg>
+            </button>
+            {{/unless}}
+            <button title="More" class="action-button more-options-button p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300 relative" x-data="{ open: false }" @click="open = !open" @click.away="open = false">
+                <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path></svg>
+                <div x-show="open" x-transition
+                     class="absolute bottom-0 right-0 mb-8 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50 py-1">
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 delete-note-button">Delete note</a>
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 add-label-button">Add label</a>
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 make-copy-button">Make a copy</a>
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 {{#if checklist_items}}show-checkboxes-button hidden{{else}}show-checkboxes-button{{/if}}">Show checkboxes</a>
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 {{#unless checklist_items}}hide-checkboxes-button hidden{{else}}hide-checkboxes-button{{/unless}}">Hide checkboxes</a>
+
+                </div>
+            </button>
+        </div>
+    </div>
+     <button title="{{#if is_pinned}}Unpin note{{else}}Pin note{{/if}}"
+            class="absolute top-2 right-2 p-2 rounded-full hover:bg-gray-200/50 dark:hover:bg-gray-600/50 text-gray-600 dark:text-gray-300 pin-note-button"
+            :class="{ 'opacity-100': showActions || isPinned, 'opacity-0': !showActions && !isPinned }">
+        <svg class="h-5 w-5 {{#unless is_pinned}}hidden{{/unless}}" id="pinned-icon-{{id}}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v4.586l2.707-2.707a1 1 0 011.414 1.414L12.414 10l2.707 2.707a1 1 0 01-1.414 1.414L11 11.414V16a1 1 0 11-2 0v-4.586l-2.707 2.707a1 1 0 01-1.414-1.414L7.586 10 4.879 7.293a1 1 0 011.414-1.414L9 8.414V4a1 1 0 011-1z" clip-rule="evenodd" />
+        </svg>
+        <svg class="h-5 w-5 {{#if is_pinned}}hidden{{/if}}" id="unpinned-icon-{{id}}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2zM5 10h.01M19 10h.01M10 3v4M14 3v4" />
+        </svg>
+    </button>
+</div>

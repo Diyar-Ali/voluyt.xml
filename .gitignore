@@ -1,0 +1,9 @@
+node_modules/
+dist/
+# IDE specific files
+.idea/
+.vscode/
+# OS specific files
+.DS_Store
+*.swp
+*~
