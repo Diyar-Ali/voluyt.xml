@@ -172,6 +172,71 @@ class Insight(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
     resolved: bool = False
 
+class Task(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    title: str
+    description: Optional[str] = None
+    assigned_to: str
+    contact_id: Optional[str] = None
+    lead_id: Optional[str] = None
+    project_id: Optional[str] = None
+    due_date: Optional[datetime] = None
+    priority: str = "medium"  # low, medium, high
+    status: str = "pending"  # pending, in_progress, completed
+    created_by: Optional[str] = None
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+    completed_at: Optional[datetime] = None
+
+class TaskCreate(BaseModel):
+    title: str
+    description: Optional[str] = None
+    assigned_to: str
+    contact_id: Optional[str] = None
+    lead_id: Optional[str] = None
+    project_id: Optional[str] = None
+    due_date: Optional[datetime] = None
+    priority: str = "medium"
+    created_by: Optional[str] = None
+
+class Company(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: str
+    industry: Optional[str] = None
+    website: Optional[str] = None
+    phone: Optional[str] = None
+    email: Optional[str] = None
+    address: Optional[str] = None
+    description: Optional[str] = None
+    employees_count: Optional[int] = None
+    annual_revenue: Optional[float] = None
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+class CompanyCreate(BaseModel):
+    name: str
+    industry: Optional[str] = None
+    website: Optional[str] = None
+    phone: Optional[str] = None
+    email: Optional[str] = None
+    address: Optional[str] = None
+    description: Optional[str] = None
+    employees_count: Optional[int] = None
+    annual_revenue: Optional[float] = None
+
+class Notification(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    title: str
+    message: str
+    type: str = "info"  # info, warning, error, success
+    recipient: Optional[str] = None
+    read: bool = False
+    action_url: Optional[str] = None
+    entity_type: Optional[str] = None
+    entity_id: Optional[str] = None
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    read_at: Optional[datetime] = None
+
 # Contact endpoints
 @api_router.post("/contacts", response_model=Contact)
 async def create_contact(contact: ContactCreate):
