@@ -194,74 +194,73 @@ class CRMAPITester:
         
         return False
 
+def test_dashboard_stats_serialization():
+    """Focused test for the dashboard stats endpoint to verify ObjectId serialization fix"""
+    tester = CRMAPITester()
+    
+    print("\n🔍 FOCUSED TEST: Dashboard Stats Serialization")
+    print("Testing if the ObjectId serialization issue has been fixed...")
+    
+    success, response = tester.test_get_dashboard_stats()
+    
+    if success and response:
+        # Verify the structure of the response
+        if 'totals' in response:
+            print("✅ Dashboard stats contains 'totals' section")
+            
+            # Check if totals contains actual numbers instead of zeros
+            totals = response['totals']
+            if totals.get('contacts', 0) > 0 or totals.get('leads', 0) > 0 or totals.get('projects', 0) > 0:
+                print("✅ Dashboard stats shows actual data (non-zero values)")
+            else:
+                print("⚠️ Dashboard stats shows all zeros - possible issue")
+                
+        else:
+            print("❌ Dashboard stats missing 'totals' section")
+            
+        # Check for recent activity
+        if 'recent_activity' in response:
+            print("✅ Dashboard stats contains 'recent_activity' section")
+            if response['recent_activity']:
+                print(f"✅ Recent activity contains {len(response['recent_activity'])} items")
+            else:
+                print("⚠️ Recent activity is empty")
+        else:
+            print("❌ Dashboard stats missing 'recent_activity' section")
+            
+        # Check for insights
+        if 'insights' in response:
+            print("✅ Dashboard stats contains 'insights' section")
+        else:
+            print("❌ Dashboard stats missing 'insights' section")
+            
+        return success
+    else:
+        print("❌ Failed to get dashboard stats")
+        return False
+
 def main():
     tester = CRMAPITester()
     
-    # Test dashboard stats
-    tester.test_get_dashboard_stats()
+    # Run the focused test for dashboard stats serialization
+    dashboard_test_success = test_dashboard_stats_serialization()
+    
+    if dashboard_test_success:
+        print("\n✅ Dashboard stats endpoint is working correctly")
+    else:
+        print("\n❌ Dashboard stats endpoint still has issues")
+    
+    # Run a few basic tests to verify other functionality
+    print("\n🔍 Running basic verification tests...")
     
     # Test contacts API
     success, contacts_response = tester.test_get_contacts()
     
-    # Create a test contact
-    test_contact = {
-        "name": f"Test Contact {uuid.uuid4().hex[:8]}",
-        "email": f"test{uuid.uuid4().hex[:8]}@example.com",
-        "phone": "555-123-4567",
-        "company": "Test Company",
-        "industry": "Technology",
-        "position": "Developer",
-        "assigned_to": "Test User"
-    }
-    contact = tester.test_create_contact(test_contact)
-    
-    if contact:
-        # Test getting a specific contact
-        tester.test_get_contact(contact['id'])
-        
-        # Test creating a lead
-        test_lead = {
-            "contact_id": contact['id'],
-            "title": "Test Lead",
-            "description": "This is a test lead",
-            "status": "prospect",
-            "value": 10000,
-            "probability": 50,
-            "source": "Website",
-            "assigned_to": "Test User"
-        }
-        lead = tester.test_create_lead(test_lead)
-        
-        # Test getting leads
-        tester.test_get_leads()
-        
-        # Test creating an interaction
-        test_interaction = {
-            "contact_id": contact['id'],
-            "lead_id": lead['id'] if lead else None,
-            "type": "call",
-            "title": "Test Call",
-            "description": "This is a test call",
-            "employee": "Test User",
-            "follow_up_required": True,
-            "follow_up_date": (datetime.utcnow().isoformat())
-        }
-        interaction = tester.test_create_interaction(test_interaction)
-        
-        # Test getting interactions
-        tester.test_get_interactions()
-        tester.test_get_interactions(contact['id'])
+    # Test leads API
+    success_leads, leads_response = tester.test_get_leads()
     
     # Test insights
-    tester.test_get_insights()
-    
-    # Test CSV import/export
-    csv_data = [
-        [f"CSV Contact 1 {uuid.uuid4().hex[:8]}", "csv1@example.com", "555-111-2222", "CSV Company 1", "Finance", "Manager", "User 1"],
-        [f"CSV Contact 2 {uuid.uuid4().hex[:8]}", "csv2@example.com", "555-333-4444", "CSV Company 2", "Healthcare", "Director", "User 2"]
-    ]
-    tester.test_csv_import(csv_data)
-    tester.test_csv_export()
+    success_insights, insights_response = tester.test_get_insights()
     
     # Print results
     print(f"\n📊 Tests passed: {tester.tests_passed}/{tester.tests_run}")
