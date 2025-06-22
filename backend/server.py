@@ -468,8 +468,16 @@ async def get_dashboard_stats():
         count = await db.leads.count_documents({"status": status})
         pipeline_stats[status] = count
     
-    # Recent activity
-    recent_interactions = await db.interactions.find().sort("date", -1).limit(5).to_list(5)
+    # Recent activity - properly convert to Pydantic models
+    recent_interactions_raw = await db.interactions.find().sort("date", -1).limit(5).to_list(5)
+    recent_interactions = []
+    for interaction in recent_interactions_raw:
+        try:
+            interaction_obj = Interaction(**interaction)
+            recent_interactions.append(interaction_obj.dict())
+        except Exception as e:
+            logger.warning(f"Error converting interaction to model: {e}")
+            continue
     
     # Insights count
     insights = await get_insights()
