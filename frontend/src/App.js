@@ -830,14 +830,37 @@ const CRM = () => {
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
                       <div className="flex items-center space-x-2">
-                        <h3 className="font-medium text-gray-900">{notification.title}</h3>
+                        {notification.action_url ? (
+                          <button
+                            onClick={() => {
+                              if (notification.entity_type === 'task' && notification.entity_id) {
+                                setActiveTab('tasks');
+                                // Future enhancement: scroll to/highlight the specific task.
+                                // This would require tasks to be loaded and a mechanism to find/focus.
+                                console.log(`Action: View ${notification.entity_type} ID: ${notification.entity_id}`);
+                              } else {
+                                console.log(`Action: Clicked notification with action_url: ${notification.action_url}`);
+                              }
+                            }}
+                            className="font-medium text-blue-600 hover:text-blue-800 hover:underline text-left"
+                          >
+                            {notification.title}
+                          </button>
+                        ) : (
+                          <h3 className="font-medium text-gray-900">{notification.title}</h3>
+                        )}
                         {!notification.read && (
-                          <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded">NEW</span>
+                          <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded ml-2">NEW</span>
                         )}
                       </div>
                       <p className="text-gray-600 mt-1">{notification.message}</p>
                       {notification.recipient && (
-                        <p className="text-sm text-blue-600 mt-2">To: {notification.recipient}</p>
+                        <p className="text-sm text-gray-500 mt-2">To: {notification.recipient}</p>
+                      )}
+                      {notification.entity_type && notification.entity_id && (
+                        <p className="text-xs text-gray-400 mt-1">
+                          Related: {notification.entity_type} ({notification.entity_id.substring(0,8)}...)
+                        </p>
                       )}
                     </div>
                     <div className="flex items-center space-x-2">

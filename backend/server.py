@@ -427,7 +427,8 @@ async def create_task(task: TaskCreate):
         type="info",
         recipient=task.assigned_to,
         entity_type="task",
-        entity_id=task_obj.id
+        entity_id=task_obj.id,
+        action_url=f"/entity/task/{task_obj.id}" # Generic prefix for frontend to parse
     )
     await db.notifications.insert_one(notification.dict())
     
