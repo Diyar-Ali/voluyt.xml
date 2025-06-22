@@ -386,6 +386,137 @@ async def get_projects(status: Optional[ProjectStatus] = None, skip: int = Query
     projects = await db.projects.find(query).skip(skip).limit(limit).to_list(limit)
     return [Project(**project) for project in projects]
 
+@api_router.get("/projects/{project_id}", response_model=Project)
+async def get_project(project_id: str):
+    project = await db.projects.find_one({"id": project_id})
+    if not project:
+        raise HTTPException(status_code=404, detail="Project not found")
+    return Project(**project)
+
+@api_router.put("/projects/{project_id}", response_model=Project)
+async def update_project(project_id: str, project: ProjectCreate):
+    existing_project = await db.projects.find_one({"id": project_id})
+    if not existing_project:
+        raise HTTPException(status_code=404, detail="Project not found")
+    
+    project_dict = project.dict()
+    project_dict["updated_at"] = datetime.utcnow()
+    await db.projects.update_one({"id": project_id}, {"$set": project_dict})
+    
+    updated_project = await db.projects.find_one({"id": project_id})
+    return Project(**updated_project)
+
+@api_router.delete("/projects/{project_id}")
+async def delete_project(project_id: str):
+    result = await db.projects.delete_one({"id": project_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Project not found")
+    return {"message": "Project deleted"}
+
+# Task endpoints
+@api_router.post("/tasks", response_model=Task)
+async def create_task(task: TaskCreate):
+    task_dict = task.dict()
+    task_obj = Task(**task_dict)
+    await db.tasks.insert_one(task_obj.dict())
+    
+    # Create notification for assigned user
+    notification = Notification(
+        title=f"New Task Assigned: {task.title}",
+        message=f"You have been assigned a new task: {task.title}",
+        type="info",
+        recipient=task.assigned_to,
+        entity_type="task",
+        entity_id=task_obj.id
+    )
+    await db.notifications.insert_one(notification.dict())
+    
+    return task_obj
+
+@api_router.get("/tasks", response_model=List[Task])
+async def get_tasks(
+    assigned_to: Optional[str] = None,
+    status: Optional[str] = None,
+    contact_id: Optional[str] = None,
+    lead_id: Optional[str] = None,
+    project_id: Optional[str] = None,
+    skip: int = Query(0, ge=0), 
+    limit: int = Query(100, ge=1, le=1000)
+):
+    query = {}
+    if assigned_to:
+        query["assigned_to"] = assigned_to
+    if status:
+        query["status"] = status
+    if contact_id:
+        query["contact_id"] = contact_id
+    if lead_id:
+        query["lead_id"] = lead_id
+    if project_id:
+        query["project_id"] = project_id
+    
+    tasks = await db.tasks.find(query).sort("due_date", 1).skip(skip).limit(limit).to_list(limit)
+    return [Task(**task) for task in tasks]
+
+@api_router.get("/tasks/{task_id}", response_model=Task)
+async def get_task(task_id: str):
+    task = await db.tasks.find_one({"id": task_id})
+    if not task:
+        raise HTTPException(status_code=404, detail="Task not found")
+    return Task(**task)
+
+@api_router.put("/tasks/{task_id}", response_model=Task)
+async def update_task(task_id: str, task: TaskCreate):
+    existing_task = await db.tasks.find_one({"id": task_id})
+    if not existing_task:
+        raise HTTPException(status_code=404, detail="Task not found")
+    
+    task_dict = task.dict()
+    task_dict["updated_at"] = datetime.utcnow()
+    
+    # If task is being marked as completed, set completed_at
+    if task_dict.get("status") == "completed" and existing_task.get("status") != "completed":
+        task_dict["completed_at"] = datetime.utcnow()
+    
+    await db.tasks.update_one({"id": task_id}, {"$set": task_dict})
+    
+    updated_task = await db.tasks.find_one({"id": task_id})
+    return Task(**updated_task)
+
+@api_router.delete("/tasks/{task_id}")
+async def delete_task(task_id: str):
+    result = await db.tasks.delete_one({"id": task_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Task not found")
+    return {"message": "Task deleted"}
+
+# Notification endpoints
+@api_router.get("/notifications", response_model=List[Notification])
+async def get_notifications(
+    recipient: Optional[str] = None,
+    read: Optional[bool] = None,
+    skip: int = Query(0, ge=0),
+    limit: int = Query(50, ge=1, le=100)
+):
+    query = {}
+    if recipient:
+        query["recipient"] = recipient
+    if read is not None:
+        query["read"] = read
+    
+    notifications = await db.notifications.find(query).sort("created_at", -1).skip(skip).limit(limit).to_list(limit)
+    return [Notification(**notification) for notification in notifications]
+
+@api_router.put("/notifications/{notification_id}/read")
+async def mark_notification_read(notification_id: str):
+    result = await db.notifications.update_one(
+        {"id": notification_id},
+        {"$set": {"read": True, "read_at": datetime.utcnow()}}
+    )
+    if result.modified_count == 0:
+        raise HTTPException(status_code=404, detail="Notification not found")
+    return {"message": "Notification marked as read"}
+
 # Interaction endpoints
 @api_router.post("/interactions", response_model=Interaction)
 async def create_interaction(interaction: InteractionCreate):
