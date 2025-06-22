@@ -358,6 +358,13 @@ async def update_lead(lead_id: str, lead: LeadCreate):
     updated_lead = await db.leads.find_one({"id": lead_id})
     return Lead(**updated_lead)
 
+@api_router.delete("/leads/{lead_id}")
+async def delete_lead(lead_id: str):
+    result = await db.leads.delete_one({"id": lead_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Lead not found")
+    return {"message": "Lead deleted"}
+
 # Project endpoints
 @api_router.post("/projects", response_model=Project)
 async def create_project(project: ProjectCreate):
