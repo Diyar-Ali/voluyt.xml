@@ -277,6 +277,46 @@ async def delete_contact(contact_id: str):
         raise HTTPException(status_code=404, detail="Contact not found")
     return {"message": "Contact deleted"}
 
+# Company endpoints
+@api_router.post("/companies", response_model=Company)
+async def create_company(company: CompanyCreate):
+    company_dict = company.dict()
+    company_obj = Company(**company_dict)
+    await db.companies.insert_one(company_obj.dict())
+    return company_obj
+
+@api_router.get("/companies", response_model=List[Company])
+async def get_companies(skip: int = Query(0, ge=0), limit: int = Query(100, ge=1, le=1000)):
+    companies = await db.companies.find().skip(skip).limit(limit).to_list(limit)
+    return [Company(**company) for company in companies]
+
+@api_router.get("/companies/{company_id}", response_model=Company)
+async def get_company(company_id: str):
+    company = await db.companies.find_one({"id": company_id})
+    if not company:
+        raise HTTPException(status_code=404, detail="Company not found")
+    return Company(**company)
+
+@api_router.put("/companies/{company_id}", response_model=Company)
+async def update_company(company_id: str, company: CompanyCreate):
+    existing_company = await db.companies.find_one({"id": company_id})
+    if not existing_company:
+        raise HTTPException(status_code=404, detail="Company not found")
+    
+    company_dict = company.dict()
+    company_dict["updated_at"] = datetime.utcnow()
+    await db.companies.update_one({"id": company_id}, {"$set": company_dict})
+    
+    updated_company = await db.companies.find_one({"id": company_id})
+    return Company(**updated_company)
+
+@api_router.delete("/companies/{company_id}")
+async def delete_company(company_id: str):
+    result = await db.companies.delete_one({"id": company_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Company not found")
+    return {"message": "Company deleted"}
+
 # Lead endpoints
 @api_router.post("/leads", response_model=Lead)
 async def create_lead(lead: LeadCreate):
